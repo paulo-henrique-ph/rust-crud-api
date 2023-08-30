@@ -1,25 +1,50 @@
-mod controllers;
+// #[macro_use]
+// extern crate diesel;
+#[macro_use]
+extern crate serde;
 
-use actix_cors::Cors;
-use actix_web::{HttpServer, middleware::Logger, http::header, App};
-use controllers::health_controller::health_checker_handler;
+mod controllers;
+mod configs;
+
+
+use actix_web::{HttpServer, middleware::Logger, App};
+use configs::{
+    cors::with_cors,
+    logger::{end_telemetry, init_telemetry, with_logger},
+    open_api::with_swagger
+};
+use controllers::routes::configure_routes;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    if std::env::var("RUST_LOG").is_err() {
+        std::env::set_var("RUST_LOG", "actix_web=info");
+    }
+    env_logger::init();
+
+    init_telemetry();
+
     HttpServer::new(|| {
-        App::new()
+        let app = App::new()
             .wrap(Logger::default())
-            .wrap(
-                Cors::default()
-                    .allowed_origin("http://localhost:3000")
-                    .allowed_methods(vec!["GET", "POST"])
-                    .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
-                    .allowed_header(header::CONTENT_TYPE)
-                    .max_age(3600),
-            )
-            .service(health_checker_handler)
+            .wrap(with_cors())
+            .wrap(with_logger())
+            .configure(configure_routes);
+
+        match is_dev() {
+            true => app.service(with_swagger()),
+            false => app,
+        }
     })
         .bind("127.0.0.1:8080")?
         .run()
-        .await
+        .await?;
+
+    end_telemetry();
+
+    Ok(())
+}
+
+fn is_dev() -> bool {
+    true
 }
