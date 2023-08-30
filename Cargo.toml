@@ -1,16 +1,40 @@
 [package]
 name = "rust-crud-api"
 version = "0.1.0"
+authors = ["Paulo Henrique <tezl38vwy@mozmail.com>"]
 edition = "2021"
+license-file = "LICENSE"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# Actix
 actix-cors = "0.6.4"
 actix-web = "4.2.1"
-argon2 = "0.5.1"
-chrono = { version = "0.4.19", features = ["serde"] }
-postgres = "0.19.7"
+
+# DB
+diesel = { version = "2.1.1", features = ["chrono", "postgres", "r2d2", "uuid"] }
+
+# Open API (with utoipa)
+utoipa = { version = "3.5.0", features = ["actix_extras"] }
+utoipa-swagger-ui = { version = "3.1.5", features = ["actix-web"] }
+
+# Serde
 serde = { version = "1.0.130", features = ["derive" ] }
 serde_json = "1.0.68"
+
+# Tracing
+opentelemetry = { version = "0.20.0", features = ["rt-tokio-current-thread"] }
+tracing = "0.1.29"
+tracing-actix-web = { version = "0.7.6", features = ["opentelemetry_0_20"] }
+tracing-opentelemetry = "0.20.0"
+tracing-subscriber = { version = "0.3.17", features = ["env-filter", "registry"] }
+
+# Others
+chrono = { version = "0.4.19", features = ["serde"] }
+dotenv = "0.15.0"
+env_logger = "0.10.0"
+jsonwebtoken = "8.3.0"
+log = "0.4.14"
+reqwest = { version = "0.11.6", features = ["json"] }
 uuid = { version = "1.4.1", features = ["serde", "v4"] }
