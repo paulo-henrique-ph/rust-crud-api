@@ -7,14 +7,11 @@ use actix_web::web::Data;
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use tracing::info;
 
-use configs::{
-    cors::with_cors,
-    logger::{end_telemetry, init_telemetry},
-    open_api::with_swagger,
-};
+use configs::{cors::with_cors, open_api::with_swagger};
 
 use crate::application_context::ApplicationContext;
 use crate::configs::environment::Env;
+use crate::configs::logger;
 use crate::handlers::{car, health};
 
 mod application_context;
@@ -30,12 +27,7 @@ async fn main() -> std::io::Result<()> {
         .await
         .expect("failed to create application context");
 
-    if std::env::var("RUST_LOG").is_err() {
-        std::env::set_var("RUST_LOG", "info");
-    }
-    env_logger::init();
-
-    let _guard = init_telemetry();
+    let _guard = logger::init_tracing_subscriber();
 
     info!("ooooo");
 
@@ -59,8 +51,6 @@ async fn main() -> std::io::Result<()> {
     .bind("127.0.0.1:8080")?
     .run()
     .await?;
-
-    end_telemetry();
 
     Ok(())
 }
