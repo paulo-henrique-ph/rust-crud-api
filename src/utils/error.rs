@@ -5,6 +5,9 @@ use actix_web::{
 };
 use derive_more::{Display, Error};
 
+#[derive(Debug, thiserror::Error)]
+pub enum ApplicationError {}
+
 #[derive(Debug, Display, Error)]
 pub enum AppError {
     #[display(fmt = "Internal Server Error")]
@@ -44,9 +47,7 @@ impl error::ResponseError for AppError {
             AppError::UnprocessableEntity(ref message) => {
                 HttpResponse::build(StatusCode::UNPROCESSABLE_ENTITY).json(message)
             }
-            AppError::ServiceUnavailable => {
-                HttpResponse::ServiceUnavailable().finish()
-            }
+            AppError::ServiceUnavailable => HttpResponse::ServiceUnavailable().finish(),
         }
     }
 }

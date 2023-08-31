@@ -8,31 +8,49 @@ license-file = "LICENSE"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+tokio = { version = "1.29.1", features = ["full"] }
+
 # Actix
 actix-cors = "0.6.4"
 actix-web = "4.2.1"
 
-# DB
-diesel = { version = "2.1.1", features = ["chrono", "postgres", "r2d2", "uuid"] }
+# Postgres
+bb8-postgres = "0.8.1"
+tokio-postgres = { version = "0.7.8", features = [
+    "with-uuid-1",
+    "with-chrono-0_4",
+    "with-serde_json-1",
+] }
+postgres-types = "0.2.5"
 
 # Open API (with utoipa)
 utoipa = { version = "3.5.0", features = ["actix_extras"] }
 utoipa-swagger-ui = { version = "3.1.5", features = ["actix-web"] }
 
 # Serde
-serde = { version = "1.0.130", features = ["derive" ] }
+serde = { version = "1.0.130", features = ["derive"] }
 serde_json = "1.0.68"
 
 # Tracing
-opentelemetry = { version = "0.20.0", features = ["rt-tokio-current-thread"] }
+opentelemetry = { version = "0.20.0", features = ["rt-tokio"] }
+opentelemetry-otlp = { version = "0.13.0", features = ["tonic"] }
 tracing = "0.1.29"
-tracing-actix-web = { version = "0.7.6", features = ["opentelemetry_0_20"] }
-tracing-opentelemetry = "0.20.0"
-tracing-subscriber = { version = "0.3.17", features = ["env-filter", "registry"] }
+tracing-opentelemetry = "0.21.0"
+tracing-appender = "0.2.2"
+tracing-subscriber = { version = "0.3.17", features = [
+    "env-filter",
+    "registry",
+] }
+
+# Error Handling
+thiserror = "1.0.44"
+
+# Configuration
+envy = "0.4.2"
+dotenv = "0.15.0"
 
 # Others
 chrono = { version = "0.4.19", features = ["serde"] }
-dotenv = "0.15.0"
 env_logger = "0.10.0"
 jsonwebtoken = "8.3.0"
 log = "0.4.14"
