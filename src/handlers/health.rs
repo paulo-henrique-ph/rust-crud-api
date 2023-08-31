@@ -1,4 +1,5 @@
 use actix_web::HttpResponse;
+use tracing::info;
 
 #[tracing::instrument(
     name = "Health check handler",
@@ -9,6 +10,9 @@ use actix_web::HttpResponse;
     )
 )]
 pub async fn handler() -> HttpResponse {
-    tracing::info!("handling request");
-    HttpResponse::Ok().json("ok")
+    info!("handling /health");
+
+    tracing::info!(histogram.baz = 10, "histogram example",);
+
+    HttpResponse::Ok().finish()
 }
