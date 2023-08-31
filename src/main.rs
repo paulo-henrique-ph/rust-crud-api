@@ -27,10 +27,18 @@ async fn main() -> std::io::Result<()> {
         .await
         .expect("failed to create application context");
 
-    let _guard = logger::init_tracing_subscriber();
+    let _guard = logger::setup();
 
-    info!("ooooo");
+    let span = tracing::info_span!(
+        "http.request",
+        otel.kind = "server",
+        http.route = "/test",
+        http.method = "POST",
+    );
 
+    span.in_scope(|| {
+        info!("handling request");
+    });
     HttpServer::new(move || {
         let app = App::new()
             .wrap(Logger::default())

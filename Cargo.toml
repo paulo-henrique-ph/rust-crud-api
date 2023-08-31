@@ -32,19 +32,12 @@ serde = { version = "1.0.130", features = ["derive"] }
 serde_json = "1.0.68"
 
 # Tracing
-opentelemetry = { version = "0.20.0", features = ["trace", "metrics", "rt-tokio"] }
-opentelemetry-otlp = { version = "0.13.0", features = ["trace", "metrics"] }
-opentelemetry-semantic-conventions = "0.12.0"
-opentelemetry-stdout = {version = "0.1.0", features = ["trace", "metrics"]}
+tonic = { version = "0.9.2", default-features = false }
+opentelemetry = { version = "0.20.0", features = ["rt-tokio", "trace", "metrics"] }
+opentelemetry-otlp = { version = "0.13.0", features = ["tonic", "tls", "tls-roots"] }
 tracing = "0.1.37"
-tracing-opentelemetry = "0.21.0"
-tracing-appender = "0.2.2"
-tracing-subscriber = { version = "0.3.17", features = [
-    "env-filter",
-    "registry",
-    "json"
-] }
-
+tracing-subscriber = { version = "0.3.17", features = ["env-filter", "json"] }
+tracing-opentelemetry = { version = "0.20.0", features = [] }
 # Error Handling
 thiserror = "1.0.44"
 
