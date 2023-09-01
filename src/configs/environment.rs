@@ -8,8 +8,11 @@ pub struct Env {
     pub keycloak_username: String,
     pub keycloak_password: String,
 
+    pub new_relic_key: String,
+
     pub port: i16,
     pub hostname: String,
+    pub is_dev: bool,
 }
 
 impl Env {

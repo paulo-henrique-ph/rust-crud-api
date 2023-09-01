@@ -13,11 +13,14 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::{EnvFilter, Registry};
 
-pub fn setup() -> WorkerGuard {
+use crate::configs::environment::Env;
+
+pub fn setup(env: &Env) -> WorkerGuard {
     let mut map = MetadataMap::with_capacity(3);
 
     let key = MetadataKey::<Ascii>::from_static("api-key");
-    let value = MetadataValue::<Ascii>::from_static("391d5dd1e90a5bf52e63042f7579404fFFFFNRAL");
+    let value =
+        MetadataValue::<Ascii>::try_from(&env.new_relic_key).expect("Couldn't get new relic key");
 
     map.insert(key, value);
 
