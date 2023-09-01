@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use tokio_postgres::Error;
 
 use crate::dto::car::CarDto;
 use crate::models::car::Car;

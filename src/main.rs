@@ -1,5 +1,5 @@
-// #[macro_use]
-// extern crate diesel;
+#[macro_use]
+extern crate diesel;
 #[macro_use]
 extern crate serde;
 
@@ -17,7 +17,11 @@ use crate::handlers::{health, v1::car};
 mod application_context;
 mod configs;
 mod dto;
+mod entities;
 mod handlers;
+mod models;
+mod repositories;
+mod services;
 mod utils;
 
 #[tokio::main]

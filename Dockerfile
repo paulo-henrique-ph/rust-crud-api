@@ -12,7 +12,7 @@ ADD . ./
 RUN rm ./target/release/deps/rust_crud_api*
 RUN cargo build --release
 
-FROM debian:buster-slim AS deployment
+FROM debian:buster-slim AS runtime
 ARG APP=/usr/src/app
 
 RUN apt-get update \
