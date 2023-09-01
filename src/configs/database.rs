@@ -3,7 +3,7 @@ use bb8_postgres::PostgresConnectionManager;
 use tokio_postgres::NoTls;
 
 use crate::configs::environment::Env;
-use crate::error::AppError;
+use crate::utils::error::AppError;
 
 pub type Postgres = PostgresConnectionManager<NoTls>;
 
