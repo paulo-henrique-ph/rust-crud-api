@@ -38,19 +38,21 @@ opentelemetry-otlp = { version = "0.13.0", features = ["trace", "metrics", "toni
 opentelemetry-stdout = { version =  "0.1.0", features = ["trace", "metrics"] }
 tracing = "0.1.37"
 tracing-subscriber = { version = "0.3.17", features = ["env-filter", "json"] }
-tracing-opentelemetry = { version = "0.20.0", features = ["tracing-log", "metrics"] }
+tracing-opentelemetry = { version = "0.21.0", features = ["tracing-log", "metrics"] }
 tracing-appender = "0.2.2"
+
 # Error Handling
 thiserror = "1.0.44"
 anyhow = "1.0.72"
 
 # Configuration
-envy = "0.4.2"
 dotenv = "0.15.0"
+envy = "0.4.2"
+env_logger = "0.10.0"
+
 
 # Others
 chrono = { version = "0.4.19", features = ["serde"] }
-env_logger = "0.10.0"
 jsonwebtoken = "8.3.0"
 log = "0.4.14"
 reqwest = { version = "0.11.6", features = ["json"] }
